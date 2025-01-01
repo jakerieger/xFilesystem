@@ -18,45 +18,46 @@ Simply add `Filesystem.hpp`/`Filesystem.cpp` to your application sources. That's
 ```cpp
 #include "Filesystem.hpp"
 using namespace x::Filesystem;
+```
 
-int main() {
-    // Get current path
-    Path currentPath = Path::currentPath();
-    
-    // Append to path
-    Path readmePath = currentPath / "README.md";
-    // or
-    Path readmePath  = currentPath.join("README.md");
-    
-    // Path operations
-    readmePath.exists();
-    readmePath.extension();
-    readmePath.hasExtension();
-    readmePath.replaceExtension(".txt");
-    readmePath.isFile();
-    readmePath.isDirectory();
-    readmePath.parent();
-    readmePath.create();
-    readmePath.createAll();
-    
-    // String representations
-    std::string readmeString = readmePath.string();
-    const char* readmeCString = readmePath.cStr();
-    
-    // File reading
-    std::vector<uint8_t> bytes = FileReader::readAllBytes(readmePath.string());
-  
-    auto asyncResult = AsyncFileReader::readAllText(readmePath.string());
-    try {
-        std::string readText = asyncResult.get();
-    } catch (...) {}
-    
-    // File writing
-    auto writeResult = FileWriter::writeAllBytes((currentPath / "newFile.txt").string());
-    if (!writeResult) { Panic("Failed to write file bytes"); }
-    
-    // Async same as above for writing: AsyncFileWriter
-    
-    return 0;
-}
+### File I/O
+
+```cpp
+// File reading
+std::vector<uint8_t> bytes = FileReader::readAllBytes(readmePath.string());
+
+auto asyncResult = AsyncFileReader::readAllText(readmePath.string());
+try {
+    std::string readText = asyncResult.get();
+} catch (...) {}
+
+// File writing
+auto writeResult = FileWriter::writeAllBytes((currentPath / "newFile.txt").string());
+if (!writeResult) { Panic("Failed to write file bytes"); }
+
+// Async same as above for writing: AsyncFileWriter
+```
+
+### `Filesystem::Path` class
+
+```cpp
+// Append to path
+Path readmePath = currentPath / "README.md";
+// or
+Path readmePath  = currentPath.join("README.md");
+
+// Path operations
+Path parent     = readmePath.parent();
+bool exists     = readmePath.exists();
+bool hasExt     = readmePath.hasExtension();
+bool isFile     = readmePath.isFile();
+bool isDir      = readmePath.isDirectory();
+bool created    = readmePath.create();
+bool createdAll = readmePath.createAll();
+std::string ext = readmePath.extension();
+readmePath.replaceExtension(".txt");
+
+// String representations
+std::string readmeString = readmePath.string();
+const char* readmeCString = readmePath.cStr();
 ```
