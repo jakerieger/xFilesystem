@@ -29,7 +29,6 @@ int main() {
     Path readmePath  = currentPath.join("README.md");
     
     // Path operations
-    /**
     readmePath.exists();
     readmePath.extension();
     readmePath.hasExtension();
@@ -39,7 +38,6 @@ int main() {
     readmePath.parent();
     readmePath.create();
     readmePath.createAll();
-    **/
     
     // String representations
     std::string readmeString = readmePath.string();
