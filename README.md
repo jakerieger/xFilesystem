@@ -32,7 +32,7 @@ try {
 } catch (...) {}
 
 // File writing
-auto writeResult = FileWriter::writeAllBytes((currentPath / "newFile.txt").string());
+auto writeResult = FileWriter::writeAllBytes((currentPath / "newFile.txt").string(), {0x0});
 if (!writeResult) { Panic("Failed to write file bytes"); }
 
 // Async same as above for writing: AsyncFileWriter
